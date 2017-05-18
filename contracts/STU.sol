@@ -42,14 +42,14 @@ contract STU is ERC20, SafeMath, Ownable {
     balances[msg.sender] = initialSupply;// Give the creator all initial tokens                    
     name = 'STU Bitjob Token';        // Set the name for display purposes     
     symbol = 'STU';                       // Set the symbol for display purposes  
-    decimals = 10;                        // Amount of decimals for display purposes
+    decimals = 6;                        // Amount of decimals for display purposes
   }
 
   function unlock() onlyOwner {
     locked = false;
   }
 
-  function burn(uint256 _value) onlyUnlocked returns (bool){
+  function burn(uint256 _value) onlyOwner returns (bool){
     balances[msg.sender] = safeSub(balances[msg.sender], _value) ;
     totalSupply = safeSub(totalSupply, _value);
     Transfer(msg.sender, 0x0, _value);
